@@ -59,7 +59,10 @@
 # define FMT_HAS_STRING_VIEW 0
 #endif
 
-#if defined _SECURE_SCL && _SECURE_SCL
+// Use the portable pointer implementation with the VS 2026 STL, whose newer
+// releases removed stdext::checked_array_iterator.
+#if defined _SECURE_SCL && _SECURE_SCL && \
+    (!defined(_MSVC_STL_VERSION) || _MSVC_STL_VERSION < 145)
 # define FMT_SECURE_SCL _SECURE_SCL
 #else
 # define FMT_SECURE_SCL 0
